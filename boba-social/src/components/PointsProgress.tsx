@@ -72,7 +72,7 @@ const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoint
         <h3 className="section-title">
           {getLevelEmoji(level)} Progress to Next Level {getLevelEmoji(level)}
         </h3>
-        <p style={{ color: '#FF69B4', fontSize: '1.1rem' }}>
+        <p style={{ color: '#476ce6ff', fontSize: '1.1rem' }}>
           {nextLevelPoints} points until your next level up! 🚀
         </p>
       </div>
@@ -95,7 +95,7 @@ const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoint
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          color: progressPercentage > 50 ? 'white' : '#FF1493',
+          color: progressPercentage > 50 ? 'white' : '#476ce6ff',
           fontWeight: 'bold',
           fontSize: '0.9rem',
           textShadow: progressPercentage > 50 ? '1px 1px 2px rgba(0,0,0,0.3)' : 'none'
@@ -109,7 +109,7 @@ const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoint
         justifyContent: 'space-between',
         marginTop: '15px',
         fontSize: '0.9rem',
-        color: '#FF69B4'
+        color: '#476ce6ff'
       }}>
         <span>🎯 Current: {level}</span>
         <span>{Math.round(progressPercentage)}% Complete</span>
@@ -129,26 +129,26 @@ const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoint
       >
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '1.5rem' }}>🧋</div>
-          <div style={{ fontSize: '0.8rem', color: '#FF69B4' }}>Drinks Ordered</div>
-          <div style={{ fontWeight: 'bold', color: '#FF1493' }}>{Math.floor(currentPoints / 50)}</div>
+          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Drinks Ordered</div>
+          <div style={{ fontWeight: 'bold', color: '#476ce6ff' }}>{Math.floor(currentPoints / 50)}</div>
         </div>
 
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '1.5rem' }}>👥</div>
-          <div style={{ fontSize: '0.8rem', color: '#FF69B4' }}>Friends Made</div>
-          <div style={{ fontWeight: 'bold', color: '#FF1493' }}>{Math.floor(currentPoints / 100)}</div>
+          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Friends Made</div>
+          <div style={{ fontWeight: 'bold', color: '#476ce6ff' }}>{Math.floor(currentPoints / 100)}</div>
         </div>
 
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '1.5rem' }}>📝</div>
-          <div style={{ fontSize: '0.8rem', color: '#FF69B4' }}>Reviews Written</div>
-          <div style={{ fontWeight: 'bold', color: '#FF1493' }}>{Math.floor(currentPoints / 75)}</div>
+          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Reviews Written</div>
+          <div style={{ fontWeight: 'bold', color: '#476ce6ff' }}>{Math.floor(currentPoints / 75)}</div>
         </div>
 
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '1.5rem' }}>🎉</div>
-          <div style={{ fontSize: '0.8rem', color: '#FF69B4' }}>Events Attended</div>
-          <div style={{ fontWeight: 'bold', color: '#FF1493' }}>{Math.floor(currentPoints / 200)}</div>
+          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Events Attended</div>
+          <div style={{ fontWeight: 'bold', color: '#0b36c2ff' }}>{Math.floor(currentPoints / 200)}</div>
         </div>
       </motion.div>
     </motion.div>

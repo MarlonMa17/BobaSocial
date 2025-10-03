@@ -67,7 +67,7 @@ const FavoriteFlavors: React.FC<FavoriteFlavorsProps> = ({ flavors, onUpdate }) 
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: 'linear-gradient(45deg, #FF69B4, #FFB6C1)',
+                background: 'linear-gradient(45deg, #476ce6ff, #FFB6C1)',
                 color: 'white',
                 padding: '8px 15px',
                 borderRadius: '20px',
@@ -100,7 +100,7 @@ const FavoriteFlavors: React.FC<FavoriteFlavorsProps> = ({ flavors, onUpdate }) 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            style={{ color: '#FF69B4', textAlign: 'center', fontStyle: 'italic' }}
+            style={{ color: '#476ce6ff', textAlign: 'center', fontStyle: 'italic' }}
           >
             No favorite flavors yet! Add some below 👇
           </motion.p>
@@ -108,7 +108,7 @@ const FavoriteFlavors: React.FC<FavoriteFlavorsProps> = ({ flavors, onUpdate }) 
       </div>
 
       <div style={{ marginBottom: '20px' }}>
-        <h4 style={{ color: '#FF1493', marginBottom: '15px', textAlign: 'center' }}>
+        <h4 style={{ color: '#0b36c2ff', marginBottom: '15px', textAlign: 'center' }}>
           ⭐ Popular Flavors ⭐
         </h4>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
@@ -121,15 +121,15 @@ const FavoriteFlavors: React.FC<FavoriteFlavorsProps> = ({ flavors, onUpdate }) 
               disabled={flavors.includes(flavor.name)}
               style={{
                 background: flavors.includes(flavor.name)
-                  ? 'rgba(255, 105, 180, 0.3)'
+                  ? 'rgba(45, 153, 224, 0.3)'
                   : 'rgba(255, 255, 255, 0.8)',
-                border: '2px solid #FFB6C1',
+                border: '2px solid #476ce6ff',
                 borderRadius: '15px',
                 padding: '8px 12px',
                 cursor: flavors.includes(flavor.name) ? 'not-allowed' : 'pointer',
                 fontFamily: 'inherit',
                 fontSize: '0.9rem',
-                color: '#FF1493',
+                color: '#0b36c2ff',
                 fontWeight: 'bold',
                 opacity: flavors.includes(flavor.name) ? 0.6 : 1
               }}
@@ -194,10 +194,10 @@ const FavoriteFlavors: React.FC<FavoriteFlavorsProps> = ({ flavors, onUpdate }) 
                   }}
                   style={{
                     background: 'transparent',
-                    border: '2px solid #FF69B4',
+                    border: '2px solid #476ce6ff',
                     borderRadius: '20px',
                     padding: '8px 16px',
-                    color: '#FF69B4',
+                    color: '#476ce6ff',
                     cursor: 'pointer',
                     fontFamily: 'inherit',
                     fontWeight: 'bold'

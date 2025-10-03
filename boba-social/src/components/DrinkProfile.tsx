@@ -73,23 +73,23 @@ const DrinkProfile: React.FC<DrinkProfileProps> = ({ user }) => {
               padding: '20px',
               margin: '20px auto',
               maxWidth: '600px',
-              border: '2px solid #FFB6C1'
+              border: '2px solid #476ce6ff'
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: '5px' }}>🏆</div>
-                <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.level}</div>
+                <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.level}</div>
               </div>
 
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: '5px' }}>🔥</div>
-                <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.streak} Day Streak</div>
+                <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.streak} Day Streak</div>
               </div>
 
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', marginBottom: '5px' }}>⭐</div>
-                <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.points} Points</div>
+                <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.points} Points</div>
               </div>
             </div>
           </motion.div>
@@ -157,7 +157,7 @@ const DrinkProfile: React.FC<DrinkProfileProps> = ({ user }) => {
           style={{ textAlign: 'center', marginTop: '30px' }}
         >
           <h3 className="section-title">Share Your Profile! 📤</h3>
-          <p style={{ color: '#FF69B4', marginBottom: '20px' }}>
+          <p style={{ color: '#476ce6ff', marginBottom: '20px' }}>
             Let your friends see your amazing bubble tea journey!
           </p>
 

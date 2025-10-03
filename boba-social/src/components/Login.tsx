@@ -52,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated, setCurrentUser }) => 
             Boba Social
             <span className="boba-emoji">🧋</span>
           </h1>
-          <p style={{ color: '#FF69B4', fontSize: '1.2rem' }}>
+          <p style={{ color: '#476ce6ff', fontSize: '1.2rem' }}>
             Welcome back, bubble tea lover!
           </p>
         </div>
@@ -90,9 +90,9 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated, setCurrentUser }) => 
         </form>
 
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <p style={{ color: '#FF69B4' }}>
+          <p style={{ color: '#476ce6ff' }}>
             New to Boba Social?{' '}
-            <Link to="/register" style={{ color: '#FF1493', textDecoration: 'none', fontWeight: 'bold' }}>
+            <Link to="/register" style={{ color: '#0b36c2ff', textDecoration: 'none', fontWeight: 'bold' }}>
               Join the bubble tea community! 🎉
             </Link>
           </p>

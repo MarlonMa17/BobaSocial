@@ -50,7 +50,7 @@ const MoodTracker: React.FC<MoodTrackerProps> = ({ currentMood, onUpdate }) => {
       </h3>
 
       <div style={{ marginBottom: '25px' }}>
-        <p style={{ color: '#FF69B4', textAlign: 'center', marginBottom: '20px' }}>
+        <p style={{ color: '#476ce6ff', textAlign: 'center', marginBottom: '20px' }}>
           How are you feeling about bubble tea today?
         </p>
 
@@ -79,7 +79,7 @@ const MoodTracker: React.FC<MoodTrackerProps> = ({ currentMood, onUpdate }) => {
               </div>
               <div style={{
                 fontSize: '0.8rem',
-                color: selectedMood === mood.emoji ? mood.color : '#FF69B4',
+                color: selectedMood === mood.emoji ? mood.color : '#476ce6ff',
                 fontWeight: 'bold'
               }}>
                 {mood.name}
@@ -96,17 +96,17 @@ const MoodTracker: React.FC<MoodTrackerProps> = ({ currentMood, onUpdate }) => {
               exit={{ opacity: 0, y: -20 }}
               style={{
                 textAlign: 'center',
-                background: 'rgba(255, 105, 180, 0.1)',
+                background: 'rgba(60, 137, 209, 0.1)',
                 borderRadius: '15px',
                 padding: '15px',
                 margin: '20px 0',
-                border: '2px solid #FFB6C1'
+                border: '2px solid #476ce6ff'
               }}
             >
               <div style={{ fontSize: '3rem', marginBottom: '10px' }}>
                 {selectedMood}
               </div>
-              <p style={{ color: '#FF1493', fontWeight: 'bold' }}>
+              <p style={{ color: '#0b36c2ff', fontWeight: 'bold' }}>
                 Current mood selected! 🎉
               </p>
             </motion.div>
@@ -115,7 +115,7 @@ const MoodTracker: React.FC<MoodTrackerProps> = ({ currentMood, onUpdate }) => {
       </div>
 
       <div>
-        <h4 style={{ color: '#FF1493', marginBottom: '15px', textAlign: 'center' }}>
+        <h4 style={{ color: '#0b36c2ff', marginBottom: '15px', textAlign: 'center' }}>
           📅 Recent Mood History
         </h4>
 
@@ -134,17 +134,17 @@ const MoodTracker: React.FC<MoodTrackerProps> = ({ currentMood, onUpdate }) => {
                 borderRadius: '12px',
                 padding: '12px',
                 margin: '8px 0',
-                border: '1px solid #FFB6C1'
+                border: '1px solid #476ce6ff'
               }}
             >
               <div style={{ fontSize: '1.8rem' }}>
                 {entry.mood}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.9rem', color: '#FF1493', fontWeight: 'bold' }}>
+                <div style={{ fontSize: '0.9rem', color: '#0b36c2ff', fontWeight: 'bold' }}>
                   {new Date(entry.date).toLocaleDateString()}
                 </div>
-                <div style={{ fontSize: '0.8rem', color: '#FF69B4' }}>
+                <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>
                   {entry.note}
                 </div>
               </div>

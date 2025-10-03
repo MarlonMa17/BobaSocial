@@ -23,9 +23,9 @@ const Navigation: React.FC = () => {
         right: 0,
         background: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
-        borderBottom: '2px solid #FFB6C1',
+        borderBottom: '2px solid #ddc5d6ff',
         zIndex: 1000,
-        padding: '15px 0'
+        padding: '10px 0'
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -34,7 +34,7 @@ const Navigation: React.FC = () => {
           style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
         >
           <span style={{ fontSize: '1.5rem' }}>🧋</span>
-          <h2 style={{ color: '#FF69B4', margin: 0, fontFamily: 'Comic Sans MS' }}>
+          <h2 style={{ color: '#476ce6ff', margin: 0, fontFamily: 'Comic Sans MS' }}>
             Boba Social
           </h2>
         </motion.div>
@@ -52,9 +52,9 @@ const Navigation: React.FC = () => {
                   padding: '8px 16px',
                   borderRadius: '20px',
                   background: location.pathname === item.path
-                    ? 'linear-gradient(45deg, #FF69B4, #FFB6C1)'
+                    ? 'linear-gradient(45deg, #476ce6ff, #476ce6ff)'
                     : 'transparent',
-                  color: location.pathname === item.path ? 'white' : '#FF69B4',
+                  color: location.pathname === item.path ? 'white' : '#476ce6ff',
                   fontWeight: 'bold',
                   transition: 'all 0.3s ease'
                 }}
@@ -71,10 +71,10 @@ const Navigation: React.FC = () => {
             onClick={() => window.location.reload()}
             style={{
               background: 'transparent',
-              border: '2px solid #FF69B4',
+              border: '2px solid #476ce6ff',
               borderRadius: '20px',
               padding: '8px 16px',
-              color: '#FF69B4',
+              color: '#476ce6ff',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',

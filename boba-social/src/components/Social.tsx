@@ -183,10 +183,10 @@ const Social: React.FC<SocialProps> = ({ user }) => {
           style={{
             width: '100%',
             background: 'rgba(255, 105, 180, 0.1)',
-            border: '2px dashed #FF69B4',
+            border: '2px dashed #476ce6ff',
             borderRadius: '15px',
             padding: '20px',
-            color: '#FF69B4',
+            color: '#476ce6ff',
             fontFamily: 'inherit',
             fontSize: '1.1rem',
             fontWeight: 'bold',
@@ -210,10 +210,10 @@ const Social: React.FC<SocialProps> = ({ user }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
               <div style={{ fontSize: '2.5rem' }}>{post.user.avatar}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 'bold', color: '#FF1493', fontSize: '1.1rem' }}>
+                <div style={{ fontWeight: 'bold', color: '#0b36c2ff', fontSize: '1.1rem' }}>
                   {post.user.name}
                 </div>
-                <div style={{ color: '#FF69B4', fontSize: '0.9rem' }}>
+                <div style={{ color: '#476ce6ff', fontSize: '0.9rem' }}>
                   {post.user.level} • {post.timestamp}
                 </div>
               </div>
@@ -237,11 +237,11 @@ const Social: React.FC<SocialProps> = ({ user }) => {
               borderRadius: '12px',
               padding: '15px',
               marginBottom: '15px',
-              border: '2px solid #FFB6C1'
+              border: '2px solid #476ce6ff'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontWeight: 'bold', color: '#FF1493', marginBottom: '5px' }}>
+                  <div style={{ fontWeight: 'bold', color: '#0b36c2ff', marginBottom: '5px' }}>
                     🧋 {post.drinkOrder}
                   </div>
                   {renderStars(post.rating)}
@@ -262,11 +262,11 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    color: post.isLiked ? '#FF1493' : '#FF69B4',
+                    color: post.isLiked ? '#0b36c2ff' : '#476ce6ff',
                     fontWeight: 'bold'
                   }}
                 >
-                  <Heart size={20} fill={post.isLiked ? '#FF1493' : 'none'} />
+                  <Heart size={20} fill={post.isLiked ? '#0b36c2ff' : 'none'} />
                   {post.likes}
                 </motion.button>
 
@@ -280,7 +280,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    color: '#FF69B4',
+                    color: '#0b36c2ff',
                     fontWeight: 'bold'
                   }}
                 >
@@ -296,7 +296,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  color: '#FF69B4'
+                  color: '#476ce6ff'
                 }}
               >
                 <Share size={20} />
@@ -335,8 +335,8 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                   }} />
                 )}
               </div>
-              <h4 style={{ color: '#FF1493', margin: '0 0 5px 0' }}>{friend.name}</h4>
-              <p style={{ color: '#FF69B4', margin: '0 0 10px 0', fontSize: '0.9rem' }}>{friend.level}</p>
+              <h4 style={{ color: '#0b36c2ff', margin: '0 0 5px 0' }}>{friend.name}</h4>
+              <p style={{ color: '#476ce6ff', margin: '0 0 10px 0', fontSize: '0.9rem' }}>{friend.level}</p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', fontSize: '0.8rem' }}>
                 <span>🏆 {friend.points}pts</span>
                 <span>🔥 {friend.streak} days</span>
@@ -344,7 +344,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
             </div>
 
             <div style={{ marginBottom: '15px' }}>
-              <h5 style={{ color: '#FF1493', marginBottom: '8px', fontSize: '0.9rem' }}>
+              <h5 style={{ color: '#0b36c2ff', marginBottom: '8px', fontSize: '0.9rem' }}>
                 Shared Interests:
               </h5>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
@@ -352,7 +352,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                   <span
                     key={interest}
                     style={{
-                      background: 'linear-gradient(45deg, #FF69B4, #FFB6C1)',
+                      background: 'linear-gradient(45deg, #476ce6ff, #FFB6C1)',
                       color: 'white',
                       padding: '3px 8px',
                       borderRadius: '10px',
@@ -395,15 +395,15 @@ const Social: React.FC<SocialProps> = ({ user }) => {
           >
             <div style={{ textAlign: 'center', marginBottom: '15px' }}>
               <div style={{ fontSize: '3rem', marginBottom: '10px' }}>{person.avatar}</div>
-              <h4 style={{ color: '#FF1493', margin: '0 0 5px 0' }}>{person.name}</h4>
-              <p style={{ color: '#FF69B4', margin: '0 0 10px 0', fontSize: '0.9rem' }}>{person.level}</p>
-              <div style={{ fontSize: '0.8rem', color: '#FF69B4' }}>
+              <h4 style={{ color: '#0b36c2ff', margin: '0 0 5px 0' }}>{person.name}</h4>
+              <p style={{ color: '#476ce6ff', margin: '0 0 10px 0', fontSize: '0.9rem' }}>{person.level}</p>
+              <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>
                 🏆 {person.points} points • 👥 {person.mutualFriends} mutual friends
               </div>
             </div>
 
             <div style={{ marginBottom: '15px' }}>
-              <h5 style={{ color: '#FF1493', marginBottom: '8px', fontSize: '0.9rem' }}>
+              <h5 style={{ color: '#0b36c2ff', marginBottom: '8px', fontSize: '0.9rem' }}>
                 Shared Interests:
               </h5>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
@@ -411,7 +411,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                   <span
                     key={interest}
                     style={{
-                      background: 'linear-gradient(45deg, #FF69B4, #FFB6C1)',
+                      background: 'linear-gradient(45deg, #476ce6ff, #6e8ae6ff)',
                       color: 'white',
                       padding: '3px 8px',
                       borderRadius: '10px',
@@ -474,12 +474,12 @@ const Social: React.FC<SocialProps> = ({ user }) => {
               onClick={() => setActiveTab(tab.id as any)}
               style={{
                 background: activeTab === tab.id
-                  ? 'linear-gradient(45deg, #FF69B4, #FFB6C1)'
+                  ? 'linear-gradient(45deg, #476ce6ff, #FFB6C1)'
                   : 'transparent',
-                border: '2px solid #FF69B4',
+                border: '2px solid #476ce6ff',
                 borderRadius: '25px',
                 padding: '12px 25px',
-                color: activeTab === tab.id ? 'white' : '#FF69B4',
+                color: activeTab === tab.id ? 'white' : '#476ce6ff',
                 cursor: 'pointer',
                 fontFamily: 'inherit',
                 fontWeight: 'bold',

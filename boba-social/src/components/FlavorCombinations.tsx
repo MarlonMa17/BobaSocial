@@ -128,12 +128,12 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
         {!showForm && (
           <motion.button
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 1.0 }}
             onClick={() => setShowForm(true)}
             className="cute-button"
             style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
           >
-            <Plus size={16} />
+            <Plus size={20} />
             Create
           </motion.button>
         )}
@@ -164,7 +164,7 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
             />
 
             <div style={{ marginBottom: '15px' }}>
-              <label style={{ color: '#FF1493', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+              <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
                 🧋 Ingredients:
               </label>
               {newCombination.ingredients.map((ingredient, index) => (
@@ -187,7 +187,7 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                       type="button"
                       onClick={() => handleRemoveIngredient(index)}
                       style={{
-                        background: '#FF69B4',
+                        background: '#476ce6ff',
                         border: 'none',
                         borderRadius: '10px',
                         padding: '8px',
@@ -207,10 +207,10 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                 onClick={handleAddIngredient}
                 style={{
                   background: 'transparent',
-                  border: '2px dashed #FF69B4',
+                  border: '2px dashed #476ce6ff',
                   borderRadius: '10px',
                   padding: '8px 16px',
-                  color: '#FF69B4',
+                  color: '#476ce6ff',
                   cursor: 'pointer',
                   fontFamily: 'inherit',
                   fontWeight: 'bold',
@@ -222,7 +222,7 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
             </div>
 
             <div style={{ marginBottom: '15px' }}>
-              <label style={{ color: '#FF1493', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+              <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
                 ⭐ Rating:
               </label>
               {renderStars(newCombination.rating, true, (rating) =>
@@ -255,10 +255,10 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                 onClick={() => setShowForm(false)}
                 style={{
                   background: 'transparent',
-                  border: '2px solid #FF69B4',
+                  border: '2px solid #476ce6ff',
                   borderRadius: '20px',
                   padding: '12px 25px',
-                  color: '#FF69B4',
+                  color: '#476ce6ff',
                   cursor: 'pointer',
                   fontFamily: 'inherit',
                   fontWeight: 'bold'
@@ -278,7 +278,7 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
             animate={{ opacity: 1 }}
             style={{
               textAlign: 'center',
-              color: '#FF69B4',
+              color: '#476ce6ff',
               fontStyle: 'italic',
               padding: '40px'
             }}
@@ -299,12 +299,12 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                   borderRadius: '15px',
                   padding: '20px',
                   margin: '15px 0',
-                  border: '2px solid #FFB6C1',
+                  border: '2px solid #476ce6ff',
                   position: 'relative'
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                  <h4 style={{ color: '#FF1493', margin: 0, fontSize: '1.2rem' }}>
+                  <h4 style={{ color: '#0b36c2ff', margin: 0, fontSize: '1.2rem' }}>
                     {combo.name}
                   </h4>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -316,7 +316,7 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                       style={{
                         background: 'none',
                         border: 'none',
-                        color: '#FF69B4',
+                        color: '#476ce6ff',
                         cursor: 'pointer'
                       }}
                     >
@@ -331,7 +331,7 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                       <span
                         key={i}
                         style={{
-                          background: 'linear-gradient(45deg, #FF69B4, #FFB6C1)',
+                          background: 'linear-gradient(45deg, #476ce6ff, #FFB6C1)',
                           color: 'white',
                           padding: '4px 12px',
                           borderRadius: '12px',
@@ -346,12 +346,12 @@ const FlavorCombinations: React.FC<FlavorCombinationsProps> = ({ combinations, o
                 </div>
 
                 {combo.notes && (
-                  <p style={{ color: '#FF69B4', fontSize: '0.9rem', fontStyle: 'italic', margin: '10px 0' }}>
+                  <p style={{ color: '#476ce6ff', fontSize: '0.9rem', fontStyle: 'italic', margin: '10px 0' }}>
                     "{combo.notes}"
                   </p>
                 )}
 
-                <div style={{ fontSize: '0.8rem', color: '#FF69B4', textAlign: 'right' }}>
+                <div style={{ fontSize: '0.8rem', color: '#476ce6ff', textAlign: 'right' }}>
                   Created: {new Date(combo.dateCreated).toLocaleDateString()}
                 </div>
               </motion.div>

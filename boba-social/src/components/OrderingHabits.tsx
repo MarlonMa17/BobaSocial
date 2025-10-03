@@ -74,10 +74,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
             onClick={() => setEditMode(true)}
             style={{
               background: 'transparent',
-              border: '2px solid #FF69B4',
+              border: '2px solid #476ce6ff',
               borderRadius: '15px',
               padding: '8px 16px',
-              color: '#FF69B4',
+              color: '#476ce6ff',
               cursor: 'pointer',
               fontFamily: 'inherit',
               fontWeight: 'bold'
@@ -98,10 +98,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           <motion.div
             whileHover={{ scale: 1.02 }}
             style={{
-              background: 'rgba(255, 105, 180, 0.1)',
+              background: 'rgba(40, 155, 231, 0.1)',
               borderRadius: '15px',
               padding: '15px',
-              border: '2px solid #FFB6C1',
+              border: '2px solid #476ce6ff',
               display: 'flex',
               alignItems: 'center',
               gap: '15px'
@@ -111,10 +111,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
               {getFrequencyEmoji(habits.frequency)}
             </div>
             <div>
-              <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
                 Frequency
               </div>
-              <div style={{ color: '#FF69B4' }}>
+              <div style={{ color: '#476ce6ff' }}>
                 {habits.frequency}
               </div>
             </div>
@@ -123,10 +123,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           <motion.div
             whileHover={{ scale: 1.02 }}
             style={{
-              background: 'rgba(255, 105, 180, 0.1)',
+              background: 'rgba(40, 155, 231, 0.1)',
               borderRadius: '15px',
               padding: '15px',
-              border: '2px solid #FFB6C1',
+              border: '2px solid #476ce6ff',
               display: 'flex',
               alignItems: 'center',
               gap: '15px'
@@ -136,10 +136,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
               {getTimeEmoji(habits.preferredTime)}
             </div>
             <div>
-              <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
                 Preferred Time
               </div>
-              <div style={{ color: '#FF69B4' }}>
+              <div style={{ color: '#476ce6ff' }}>
                 {habits.preferredTime}
               </div>
             </div>
@@ -148,10 +148,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           <motion.div
             whileHover={{ scale: 1.02 }}
             style={{
-              background: 'rgba(255, 105, 180, 0.1)',
+              background: 'rgba(40, 155, 231, 0.1)',
               borderRadius: '15px',
               padding: '15px',
-              border: '2px solid #FFB6C1',
+              border: '2px solid #476ce6ff',
               display: 'flex',
               alignItems: 'center',
               gap: '15px'
@@ -161,10 +161,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
               {getSpendEmoji(habits.averageSpend)}
             </div>
             <div>
-              <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
                 Average Spend
               </div>
-              <div style={{ color: '#FF69B4' }}>
+              <div style={{ color: '#476ce6ff' }}>
                 {habits.averageSpend}
               </div>
             </div>
@@ -173,10 +173,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           <motion.div
             whileHover={{ scale: 1.02 }}
             style={{
-              background: 'rgba(255, 105, 180, 0.1)',
+              background: 'rgba(40, 155, 231, 0.1)',
               borderRadius: '15px',
               padding: '15px',
-              border: '2px solid #FFB6C1',
+              border: '2px solid #476ce6ff',
               display: 'flex',
               alignItems: 'center',
               gap: '15px'
@@ -186,10 +186,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
               📍
             </div>
             <div>
-              <div style={{ color: '#FF1493', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
                 Favorite Location
               </div>
-              <div style={{ color: '#FF69B4' }}>
+              <div style={{ color: '#476ce6ff' }}>
                 {habits.favoriteLocation}
               </div>
             </div>
@@ -202,7 +202,7 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
         >
           <div>
-            <label style={{ color: '#FF1493', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
               📅 How often do you order bubble tea?
             </label>
             <select
@@ -217,7 +217,7 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           </div>
 
           <div>
-            <label style={{ color: '#FF1493', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
               ⏰ When do you usually order?
             </label>
             <select
@@ -232,7 +232,7 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           </div>
 
           <div>
-            <label style={{ color: '#FF1493', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
               💰 How much do you usually spend?
             </label>
             <select
@@ -247,7 +247,7 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
           </div>
 
           <div>
-            <label style={{ color: '#FF1493', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
               📍 Favorite location?
             </label>
             <select
@@ -276,10 +276,10 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
               onClick={handleCancel}
               style={{
                 background: 'transparent',
-                border: '2px solid #FF69B4',
+                border: '2px solid #476ce6ff',
                 borderRadius: '20px',
                 padding: '12px 25px',
-                color: '#FF69B4',
+                color: '#476ce6ff',
                 cursor: 'pointer',
                 fontFamily: 'inherit',
                 fontWeight: 'bold'

@@ -67,7 +67,7 @@ const Register: React.FC<RegisterProps> = ({ setIsAuthenticated, setCurrentUser 
             Join Boba Social
             <span className="boba-emoji">🎉</span>
           </h1>
-          <p style={{ color: '#FF69B4', fontSize: '1.2rem' }}>
+          <p style={{ color: '#476ce6ff', fontSize: '1.2rem' }}>
             Start your bubble tea journey!
           </p>
         </div>
@@ -139,9 +139,9 @@ const Register: React.FC<RegisterProps> = ({ setIsAuthenticated, setCurrentUser 
         </form>
 
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <p style={{ color: '#FF69B4' }}>
+          <p style={{ color: '#476ce6ff' }}>
             Already a member?{' '}
-            <Link to="/login" style={{ color: '#FF1493', textDecoration: 'none', fontWeight: 'bold' }}>
+            <Link to="/login" style={{ color: '#0b36c2ff', textDecoration: 'none', fontWeight: 'bold' }}>
               Sign in here! 🧋
             </Link>
           </p>
