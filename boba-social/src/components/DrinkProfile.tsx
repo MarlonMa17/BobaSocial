@@ -101,7 +101,7 @@ const DrinkProfile: React.FC<DrinkProfileProps> = ({ user }) => {
           />
         </div>
 
-        <div className="grid grid-2">
+        <div className="stack">
           <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -125,7 +125,7 @@ const DrinkProfile: React.FC<DrinkProfileProps> = ({ user }) => {
           </motion.div>
         </div>
 
-        <div className="grid grid-2">
+        <div className="stack">
           <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}

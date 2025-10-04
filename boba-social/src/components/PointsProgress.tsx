@@ -66,7 +66,8 @@ const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoint
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6 }}
       className="card"
-      style={{ margin: '20px auto', maxWidth: '700px' }}
+      // style={{ margin: '20px auto', maxWidth: '700px' }}
+      style={{ width:'100%' }}
     >
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         <h3 className="section-title">

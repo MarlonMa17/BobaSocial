@@ -156,7 +156,7 @@ const MoodTracker: React.FC<MoodTrackerProps> = ({ currentMood, onUpdate }) => {
       <motion.div
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 2, repeat: Infinity }}
-        style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.5rem' }}
+        style={{ textAlign: 'center', marginTop: '0px', fontSize: '1.5rem' }}
       >
         Keep tracking your bubble tea moods! 🧋💕
       </motion.div>
