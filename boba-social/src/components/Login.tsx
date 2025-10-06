@@ -8,14 +8,11 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ setIsAuthenticated, setCurrentUser }) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const mockUser = {
       id: 1,
       name: 'Boba Lover',
@@ -25,86 +22,87 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated, setCurrentUser }) => 
       favoritesFlavors: ['Taro', 'Brown Sugar', 'Matcha'],
       streak: 7
     };
-
     setCurrentUser(mockUser);
     setIsAuthenticated(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
-    <div className="container">
+    <div className="container auth">
       <motion.div
-        initial={{ y: 50, opacity: 0 }}
+        initial={{ y: 36, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="card"
-        style={{ maxWidth: '400px', margin: '50px auto' }}
+        transition={{ duration: 0.5 }}
+        className="auth-card"
       >
-        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <h1 className="page-title">
-            <span className="boba-emoji">🧋</span>
-            Boba Social
-            <span className="boba-emoji">🧋</span>
-          </h1>
-          <p style={{ color: '#476ce6ff', fontSize: '1.2rem' }}>
-            Welcome back, bubble tea lover!
-          </p>
+        {/* 顶部品牌 */}
+        <div className="auth-head">
+          <motion.div
+            initial={{ opacity: 0, scale: .96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: .05 }}
+            className="auth-badge"
+          >
+            🧋
+          </motion.div>
+          <h1 className="auth-title">Boba Social</h1>
+          <p className="auth-sub">Welcome back, bubble tea lover!</p>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="📧 Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="cute-input"
-            required
-          />
+        {/* 表单 */}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-field">
+            <input
+              type="email"
+              name="email"
+              placeholder=" "
+              value={formData.email}
+              onChange={handleChange}
+              className="auth-input"
+              required
+            />
+            <label className="auth-label">📧 Email</label>
+          </div>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="🔒 Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="cute-input"
-            required
-          />
+          <div className="auth-field">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder=" "
+              value={formData.password}
+              onChange={handleChange}
+              className="auth-input"
+              required
+            />
+            <label className="auth-label">🔒 Password</label>
+            <button
+              type="button"
+              className="auth-eye"
+              onClick={() => setShowPassword(v => !v)}
+              aria-label="Toggle password visibility"
+            >
+              {showPassword ? '🙈' : '👁️'}
+            </button>
+          </div>
 
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
             type="submit"
-            className="cute-button"
-            style={{ width: '100%', marginTop: '20px' }}
+            className="auth-button"
           >
             Sign In 🧋
           </motion.button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <p style={{ color: '#476ce6ff' }}>
-            New to Boba Social?{' '}
-            <Link to="/register" style={{ color: '#0b36c2ff', textDecoration: 'none', fontWeight: 'bold' }}>
-              Join the bubble tea community! 🎉
-            </Link>
-          </p>
+        {/* 底部链接 */}
+        <div className="auth-foot">
+          <span>New to Boba Social? </span>
+          <Link to="/register" className="auth-link">Join the bubble tea community! 🎉</Link>
         </div>
-
-        <motion.div
-          animate={{ rotate: [0, 5, -5, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          style={{ textAlign: 'center', marginTop: '20px', fontSize: '3rem' }}
-        >
-          🧋
-        </motion.div>
       </motion.div>
     </div>
   );

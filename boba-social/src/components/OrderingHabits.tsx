@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, DollarSign, MapPin, Calendar } from 'lucide-react';
 
 interface OrderingHabitsData {
   frequency: string;
@@ -12,9 +11,24 @@ interface OrderingHabitsData {
 interface OrderingHabitsProps {
   habits: OrderingHabitsData;
   onUpdate: (habits: OrderingHabitsData) => void;
+  /** 全宽出血 */
+  fullWidth?: boolean;
+  /** 无边框、无阴影、无圆角 */
+  seamless?: boolean;
+  /** 背景颜色或渐变 */
+  background?: string;
+  /** 内容最大宽度（可为 'none'） */
+  maxContentWidth?: number | 'none';
 }
 
-const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => {
+const OrderingHabits: React.FC<OrderingHabitsProps> = ({
+  habits,
+  onUpdate,
+  fullWidth = true,
+  seamless = true,
+  background,
+  maxContentWidth = 1200,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [tempHabits, setTempHabits] = useState(habits);
 
@@ -62,243 +76,197 @@ const OrderingHabits: React.FC<OrderingHabitsProps> = ({ habits, onUpdate }) => 
   };
 
   return (
-    <div className="card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h3 className="section-title" style={{ margin: 0 }}>
-          📊 My Ordering Habits 📊
-        </h3>
-        {!editMode && (
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setEditMode(true)}
-            style={{
-              background: 'transparent',
-              border: '2px solid #476ce6ff',
-              borderRadius: '15px',
-              padding: '8px 16px',
-              color: '#476ce6ff',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              fontWeight: 'bold'
-            }}
-          >
-            ✏️ Edit
-          </motion.button>
-        )}
-      </div>
-
-      {!editMode ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="grid"
-          style={{ gap: '15px' }}
-        >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            style={{
-              background: 'rgba(40, 155, 231, 0.1)',
-              borderRadius: '15px',
-              padding: '15px',
-              border: '2px solid #476ce6ff',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}
-          >
-            <div style={{ fontSize: '2rem' }}>
-              {getFrequencyEmoji(habits.frequency)}
-            </div>
-            <div>
-              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                Frequency
-              </div>
-              <div style={{ color: '#476ce6ff' }}>
-                {habits.frequency}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            style={{
-              background: 'rgba(40, 155, 231, 0.1)',
-              borderRadius: '15px',
-              padding: '15px',
-              border: '2px solid #476ce6ff',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}
-          >
-            <div style={{ fontSize: '2rem' }}>
-              {getTimeEmoji(habits.preferredTime)}
-            </div>
-            <div>
-              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                Preferred Time
-              </div>
-              <div style={{ color: '#476ce6ff' }}>
-                {habits.preferredTime}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            style={{
-              background: 'rgba(40, 155, 231, 0.1)',
-              borderRadius: '15px',
-              padding: '15px',
-              border: '2px solid #476ce6ff',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}
-          >
-            <div style={{ fontSize: '2rem' }}>
-              {getSpendEmoji(habits.averageSpend)}
-            </div>
-            <div>
-              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                Average Spend
-              </div>
-              <div style={{ color: '#476ce6ff' }}>
-                {habits.averageSpend}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            style={{
-              background: 'rgba(40, 155, 231, 0.1)',
-              borderRadius: '15px',
-              padding: '15px',
-              border: '2px solid #476ce6ff',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px'
-            }}
-          >
-            <div style={{ fontSize: '2rem' }}>
-              📍
-            </div>
-            <div>
-              <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                Favorite Location
-              </div>
-              <div style={{ color: '#476ce6ff' }}>
-                {habits.favoriteLocation}
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-        >
-          <div>
-            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
-              📅 How often do you order bubble tea?
-            </label>
-            <select
-              value={tempHabits.frequency}
-              onChange={(e) => setTempHabits(prev => ({ ...prev, frequency: e.target.value }))}
-              className="cute-input"
-            >
-              {frequencies.map(freq => (
-                <option key={freq} value={freq}>{freq}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
-              ⏰ When do you usually order?
-            </label>
-            <select
-              value={tempHabits.preferredTime}
-              onChange={(e) => setTempHabits(prev => ({ ...prev, preferredTime: e.target.value }))}
-              className="cute-input"
-            >
-              {times.map(time => (
-                <option key={time} value={time}>{time}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
-              💰 How much do you usually spend?
-            </label>
-            <select
-              value={tempHabits.averageSpend}
-              onChange={(e) => setTempHabits(prev => ({ ...prev, averageSpend: e.target.value }))}
-              className="cute-input"
-            >
-              {spendRanges.map(range => (
-                <option key={range} value={range}>{range}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label style={{ color: '#0b36c2ff', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
-              📍 Favorite location?
-            </label>
-            <select
-              value={tempHabits.favoriteLocation}
-              onChange={(e) => setTempHabits(prev => ({ ...prev, favoriteLocation: e.target.value }))}
-              className="cute-input"
-            >
-              {locations.map(location => (
-                <option key={location} value={location}>{location}</option>
-              ))}
-            </select>
-          </div>
-
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+    <section
+      className={[
+        fullWidth ? 'bleed-fullwidth' : '',
+        seamless ? 'seamless' : 'card-like'
+      ].join(' ')}
+      style={{
+        background: 'linear-gradient(135deg, #f8dfff, #cae8ff)'  // ← 这里改
+      }}
+    >
+      <div
+        className="section-inner"
+        style={{
+          maxWidth: maxContentWidth === 'none' ? 'none' : `${maxContentWidth}px`
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <h3 className="section-title" style={{ margin: 0 }}>
+            📊 My Ordering Habits 📊
+          </h3>
+          {!editMode && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleSave}
-              className="cute-button"
-            >
-              Save Changes 💾
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleCancel}
+              onClick={() => setEditMode(true)}
               style={{
                 background: 'transparent',
                 border: '2px solid #476ce6ff',
-                borderRadius: '20px',
-                padding: '12px 25px',
+                borderRadius: '15px',
+                padding: '8px 16px',
                 color: '#476ce6ff',
                 cursor: 'pointer',
                 fontFamily: 'inherit',
                 fontWeight: 'bold'
               }}
             >
-              Cancel
+              ✏️ Edit
             </motion.button>
-          </div>
-        </motion.div>
-      )}
+          )}
+        </div>
 
-      <motion.div
-        animate={{ rotate: [0, 5, -5, 0] }}
-        transition={{ duration: 3, repeat: Infinity }}
-        style={{ textAlign: 'center', marginTop: '20px', fontSize: '2rem' }}
-      >
-        🧋📈
-      </motion.div>
-    </div>
+        {!editMode ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="grid"
+            style={{ gap: '15px' }}
+          >
+            {[
+              {
+                title: 'Frequency',
+                value: habits.frequency,
+                icon: getFrequencyEmoji(habits.frequency),
+              },
+              {
+                title: 'Preferred Time',
+                value: habits.preferredTime,
+                icon: getTimeEmoji(habits.preferredTime),
+              },
+              {
+                title: 'Average Spend',
+                value: habits.averageSpend,
+                icon: getSpendEmoji(habits.averageSpend),
+              },
+              {
+                title: 'Favorite Location',
+                value: habits.favoriteLocation,
+                icon: '📍',
+              },
+            ].map((item) => (
+              <motion.div
+                key={item.title}
+                whileHover={{ scale: 1.02 }}
+                style={{
+                  background: 'rgba(40, 155, 231, 0.1)',
+                  borderRadius: '15px',
+                  padding: '15px',
+                  border: '2px solid #476ce6ff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '15px'
+                }}
+              >
+                <div style={{ fontSize: '2rem' }}>{item.icon}</div>
+                <div>
+                  <div style={{ color: '#0b36c2ff', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                    {item.title}
+                  </div>
+                  <div style={{ color: '#476ce6ff' }}>{item.value}</div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+          >
+            <div>
+              <label className="field-label">📅 How often do you order bubble tea?</label>
+              <select
+                value={tempHabits.frequency}
+                onChange={(e) => setTempHabits((p) => ({ ...p, frequency: e.target.value }))}
+                className="cute-input"
+              >
+                {frequencies.map((f) => (
+                  <option key={f} value={f}>{f}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="field-label">⏰ When do you usually order?</label>
+              <select
+                value={tempHabits.preferredTime}
+                onChange={(e) => setTempHabits((p) => ({ ...p, preferredTime: e.target.value }))}
+                className="cute-input"
+              >
+                {times.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="field-label">💰 How much do you usually spend?</label>
+              <select
+                value={tempHabits.averageSpend}
+                onChange={(e) => setTempHabits((p) => ({ ...p, averageSpend: e.target.value }))}
+                className="cute-input"
+              >
+                {spendRanges.map((r) => (
+                  <option key={r} value={r}>{r}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="field-label">📍 Favorite location?</label>
+              <select
+                value={tempHabits.favoriteLocation}
+                onChange={(e) => setTempHabits((p) => ({ ...p, favoriteLocation: e.target.value }))}
+                className="cute-input"
+              >
+                {locations.map((l) => (
+                  <option key={l} value={l}>{l}</option>
+                ))}
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSave}
+                className="cute-button"
+              >
+                Save Changes 💾
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleCancel}
+                style={{
+                  background: 'transparent',
+                  border: '2px solid #476ce6ff',
+                  borderRadius: '20px',
+                  padding: '12px 25px',
+                  color: '#476ce6ff',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  fontWeight: 'bold'
+                }}
+              >
+                Cancel
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        <motion.div
+          animate={{ rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          style={{ textAlign: 'center', marginTop: '20px', fontSize: '2rem' }}
+        >
+          {/* 🧋📈 */}
+        </motion.div>
+      </div>
+
+      <div className="hairline-separator" />
+    </section>
   );
 };
 

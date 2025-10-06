@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useMotionValue, useSpring, useTransform, useMotionValueEvent } from 'framer-motion';
 
 interface PointsProgressProps {
   currentPoints: number;
@@ -8,23 +8,36 @@ interface PointsProgressProps {
 }
 
 const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoints, level }) => {
-  const [animatedPoints, setAnimatedPoints] = useState(0);
   const controls = useAnimation();
-  const progressPercentage = (currentPoints / maxPoints) * 100;
+
+  // 1) 用 motionValue + spring 做更“顺滑”的进度
+  const rawPct = useMotionValue(0);
+  const pctSpring = useSpring(rawPct, { stiffness: 90, damping: 18, mass: 0.6 });
+  const widthPct = useTransform(pctSpring, (v) => `${v}%`);
+
+  // 2) 数字平滑增长（当前点数）
+  const pointsMV = useMotionValue(0);
+  const pointsSpring = useSpring(pointsMV, { stiffness: 90, damping: 20 });
+  const progress = Math.min(currentPoints / maxPoints, 1);
+  const nextLevelPoints = Math.max(maxPoints - currentPoints, 0);
+
+  const [displayPoints, setDisplayPoints] = useState(0); // ← 新增：用于显示的数字
+
+  // 当 spring 变化时，同步到 React state，触发重渲染
+  useMotionValueEvent(pointsSpring, 'change', (v) => {
+    setDisplayPoints(Math.round(v));
+  });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimatedPoints(currentPoints);
-      controls.start({
-        width: `${progressPercentage}%`,
-        transition: { duration: 1.5, ease: "easeOut" }
-      });
-    }, 500);
+    // 延迟一点点入场
+    const start = setTimeout(() => {
+      rawPct.set(progress * 100);
+      pointsMV.set(currentPoints);
+      controls.start({ opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } });
+    }, 350);
+    return () => clearTimeout(start);
+  }, [progress, currentPoints, rawPct, pointsMV, controls]);
 
-    return () => clearTimeout(timer);
-  }, [currentPoints, maxPoints, progressPercentage, controls]);
-
-  const nextLevelPoints = maxPoints - currentPoints;
   const getLevelEmoji = (level: string) => {
     if (level.includes('Newbie')) return '🌱';
     if (level.includes('Explorer')) return '🗺️';
@@ -34,125 +47,81 @@ const PointsProgress: React.FC<PointsProgressProps> = ({ currentPoints, maxPoint
     return '🧋';
   };
 
-  const bubbles = Array.from({ length: 5 }, (_, i) => (
-    <motion.div
-      key={i}
-      initial={{ y: 0, opacity: 0.7 }}
-      animate={{
-        y: [-20, -40, -20],
-        opacity: [0.7, 1, 0.7]
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-        delay: i * 0.3
-      }}
-      style={{
-        position: 'absolute',
-        right: `${10 + i * 20}%`,
-        top: '50%',
-        width: '8px',
-        height: '8px',
-        background: 'rgba(255, 255, 255, 0.8)',
-        borderRadius: '50%',
-        pointerEvents: 'none'
-      }}
-    />
-  ));
+  // 里程碑（25/50/75/100%）
+  const milestones = [0.25, 0.5, 0.75, 1];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6 }}
-      className="card"
-      // style={{ margin: '20px auto', maxWidth: '700px' }}
-      style={{ width:'100%' }}
+    <motion.section
+      initial={{ opacity: 0.9, y: 8 }}
+      animate={controls}
+      style={{ width: '100%' }}
+      aria-label="Progress to next level"
     >
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 className="section-title">
+      {/* 标题区 */}
+      <div style={{ textAlign: 'center', marginBottom: 18 }}>
+        <h3 className="section-title" style={{ margin: 0 }}>
           {getLevelEmoji(level)} Progress to Next Level {getLevelEmoji(level)}
         </h3>
-        <p style={{ color: '#476ce6ff', fontSize: '1.1rem' }}>
-          {nextLevelPoints} points until your next level up! 🚀
+        <p style={{ color: '#476ce6ff', fontSize: '1.05rem', marginTop: 6 }}>
+          {Math.ceil(nextLevelPoints)} points until your next level up! 🚀
         </p>
       </div>
 
-      <div className="progress-container" style={{ position: 'relative' }}>
+      {/* 进度条容器（玻璃质感轨道） */}
+      <div className="pp-track" role="progressbar" aria-valuemin={0} aria-valuemax={maxPoints} aria-valuenow={currentPoints}>
+        {/* 进度填充层 */}
         <motion.div
-          className="progress-bar"
-          initial={{ width: '0%' }}
-          animate={controls}
-          style={{
-            position: 'relative',
-            overflow: 'hidden'
-          }}
+          className="pp-fill"
+          style={{ width: widthPct }}
         >
-          {progressPercentage > 20 && bubbles}
+          {/* 微光层（只放在前半截，避免太花） */}
+          <div className="pp-sheen" />
         </motion.div>
 
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: progressPercentage > 50 ? 'white' : '#476ce6ff',
-          fontWeight: 'bold',
-          fontSize: '0.9rem',
-          textShadow: progressPercentage > 50 ? '1px 1px 2px rgba(0,0,0,0.3)' : 'none'
-        }}>
-          {animatedPoints} / {maxPoints}
-        </div>
+        {/* 中央数值 */}
+        <motion.div className="pp-label" style={{ color: progress > 0.55 ? 'white' : '#0b36c2ff' }}>
+          {/* {Math.round(pointsSpring.get())} / {maxPoints} */}
+          {displayPoints} / {maxPoints}
+        </motion.div>
+
+        {/* 里程碑刻度 */}
+        {milestones.map((m) => (
+          <div key={m} className="pp-tick" style={{ left: `${m * 100}%` }}>
+            <div className="pp-tick-dot" />
+            <div className="pp-tick-text">{Math.round(m * 100)}%</div>
+          </div>
+        ))}
       </div>
 
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginTop: '15px',
-        fontSize: '0.9rem',
-        color: '#476ce6ff'
-      }}>
+      {/* 底部统计 */}
+      <div className="pp-meta">
         <span>🎯 Current: {level}</span>
-        <span>{Math.round(progressPercentage)}% Complete</span>
+        <span>{Math.round(progress * 100)}% Complete</span>
       </div>
 
+      {/* 小统计卡片 */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: 0.8 }}
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '20px',
-          marginTop: '20px',
-          flexWrap: 'wrap'
+          display: 'flex', justifyContent: 'center', gap: 20, marginTop: 18, flexWrap: 'wrap'
         }}
       >
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem' }}>🧋</div>
-          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Drinks Ordered</div>
-          <div style={{ fontWeight: 'bold', color: '#476ce6ff' }}>{Math.floor(currentPoints / 50)}</div>
-        </div>
-
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem' }}>👥</div>
-          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Friends Made</div>
-          <div style={{ fontWeight: 'bold', color: '#476ce6ff' }}>{Math.floor(currentPoints / 100)}</div>
-        </div>
-
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem' }}>📝</div>
-          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Reviews Written</div>
-          <div style={{ fontWeight: 'bold', color: '#476ce6ff' }}>{Math.floor(currentPoints / 75)}</div>
-        </div>
-
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem' }}>🎉</div>
-          <div style={{ fontSize: '0.8rem', color: '#476ce6ff' }}>Events Attended</div>
-          <div style={{ fontWeight: 'bold', color: '#0b36c2ff' }}>{Math.floor(currentPoints / 200)}</div>
-        </div>
+        {[
+          { icon: '🧋', label: 'Drinks Ordered', val: Math.floor(currentPoints / 50) },
+          { icon: '👥', label: 'Friends Made', val: Math.floor(currentPoints / 100) },
+          { icon: '📝', label: 'Reviews Written', val: Math.floor(currentPoints / 75) },
+          { icon: '🎉', label: 'Events Attended', val: Math.floor(currentPoints / 200) },
+        ].map(({ icon, label, val }) => (
+          <div key={label} style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '1.45rem' }}>{icon}</div>
+            <div style={{ fontSize: '.82rem', color: '#476ce6ff' }}>{label}</div>
+            <div style={{ fontWeight: 800, color: '#0b36c2ff' }}>{val}</div>
+          </div>
+        ))}
       </motion.div>
-    </motion.div>
+    </motion.section>
   );
 };
 

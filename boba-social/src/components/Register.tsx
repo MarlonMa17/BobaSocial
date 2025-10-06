@@ -9,27 +9,24 @@ interface RegisterProps {
 
 const Register: React.FC<RegisterProps> = ({ setIsAuthenticated, setCurrentUser }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    favoriteFlavor: ''
+    name: '', email: '', password: '', confirmPassword: '', favoriteFlavor: ''
   });
+  const [showPw, setShowPw] = useState(false);
+  const [showPw2, setShowPw2] = useState(false);
+  const [strength, setStrength] = useState(0);
 
   const flavorOptions = [
-    'Original Milk Tea', 'Taro', 'Brown Sugar', 'Matcha', 'Thai Tea',
-    'Honeydew', 'Strawberry', 'Mango', 'Passion Fruit', 'Lychee',
-    'Coconut', 'Chocolate', 'Vanilla', 'Caramel', 'Wintermelon'
+    'Original Milk Tea','Taro','Brown Sugar','Matcha','Thai Tea','Honeydew',
+    'Strawberry','Mango','Passion Fruit','Lychee','Coconut','Chocolate',
+    'Vanilla','Caramel','Wintermelon'
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match! 😢');
       return;
     }
-
     const newUser = {
       id: Date.now(),
       name: formData.name,
@@ -40,122 +37,117 @@ const Register: React.FC<RegisterProps> = ({ setIsAuthenticated, setCurrentUser 
       streak: 1,
       joinDate: new Date().toISOString()
     };
-
     setCurrentUser(newUser);
     setIsAuthenticated(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    if (name === 'password') {
+      // 简单强度：长度 + 种类
+      let s = 0;
+      if (value.length > 5) s++;
+      if (value.length > 8) s++;
+      if (/[A-Z]/.test(value)) s++;
+      if (/\d/.test(value)) s++;
+      if (/[^A-Za-z0-9]/.test(value)) s++;
+      setStrength(Math.min(4, s));
+    }
   };
 
   return (
-    <div className="container">
+    <div className="container auth">
       <motion.div
-        initial={{ y: 50, opacity: 0 }}
+        initial={{ y: 36, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="card"
-        style={{ maxWidth: '450px', margin: '50px auto' }}
+        transition={{ duration: 0.5 }}
+        className="auth-card"
       >
-        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <h1 className="page-title">
-            <span className="boba-emoji">🎉</span>
-            Join Boba Social
-            <span className="boba-emoji">🎉</span>
-          </h1>
-          <p style={{ color: '#476ce6ff', fontSize: '1.2rem' }}>
-            Start your bubble tea journey!
-          </p>
+        <div className="auth-head">
+          <motion.div initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} className="auth-badge">
+            🎉
+          </motion.div>
+          <h1 className="auth-title">Join Boba Social</h1>
+          <p className="auth-sub">Start your bubble tea journey!</p>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="🌟 Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="cute-input"
-            required
-          />
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-field">
+            <input
+              type="text" name="name" placeholder=" "
+              value={formData.name} onChange={handleChange}
+              className="auth-input" required
+            />
+            <label className="auth-label">🌟 Your Name</label>
+          </div>
 
-          <input
-            type="email"
-            name="email"
-            placeholder="📧 Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="cute-input"
-            required
-          />
+          <div className="auth-field">
+            <input
+              type="email" name="email" placeholder=" "
+              value={formData.email} onChange={handleChange}
+              className="auth-input" required
+            />
+            <label className="auth-label">📧 Email</label>
+          </div>
 
-          <select
-            name="favoriteFlavor"
-            value={formData.favoriteFlavor}
-            onChange={handleChange}
-            className="cute-input"
-            required
-            style={{ appearance: 'none', backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"%23FF69B4\"><path d=\"M7 10l5 5 5-5z\"/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center', backgroundSize: '20px' }}
-          >
-            <option value="">🧋 Choose your favorite flavor</option>
-            {flavorOptions.map(flavor => (
-              <option key={flavor} value={flavor}>{flavor}</option>
-            ))}
-          </select>
+          <div className="auth-field">
+            <select
+              name="favoriteFlavor" value={formData.favoriteFlavor}
+              onChange={handleChange} className="auth-input auth-select" required
+            >
+              <option value="">🧋 Choose your favorite flavor</option>
+              {flavorOptions.map(f => <option key={f} value={f}>{f}</option>)}
+            </select>
+            <label className="auth-label">🧋 Favorite Flavor</label>
+          </div>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="🔒 Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="cute-input"
-            required
-          />
+          <div className="auth-field">
+            <input
+              type={showPw ? 'text' : 'password'} name="password" placeholder=" "
+              value={formData.password} onChange={handleChange}
+              className="auth-input" required
+            />
+            <label className="auth-label">🔒 Password</label>
+            <button type="button" className="auth-eye" onClick={() => setShowPw(v => !v)}>
+              {showPw ? '🙈' : '👁️'}
+            </button>
+            {/* 强度条 */}
+            <div className="auth-strength">
+              <span data-on={strength > 0} />
+              <span data-on={strength > 1} />
+              <span data-on={strength > 2} />
+              <span data-on={strength > 3} />
+            </div>
+          </div>
 
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="🔒 Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="cute-input"
-            required
-          />
+          <div className="auth-field">
+            <input
+              type={showPw2 ? 'text' : 'password'} name="confirmPassword" placeholder=" "
+              value={formData.confirmPassword} onChange={handleChange}
+              className="auth-input" required
+            />
+            <label className="auth-label">🔒 Confirm Password</label>
+            <button type="button" className="auth-eye" onClick={() => setShowPw2(v => !v)}>
+              {showPw2 ? '🙈' : '👁️'}
+            </button>
+          </div>
 
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
             type="submit"
-            className="cute-button"
-            style={{ width: '100%', marginTop: '20px' }}
+            className="auth-button"
           >
             Join the Boba Community! 🎊
           </motion.button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <p style={{ color: '#476ce6ff' }}>
-            Already a member?{' '}
-            <Link to="/login" style={{ color: '#0b36c2ff', textDecoration: 'none', fontWeight: 'bold' }}>
-              Sign in here! 🧋
-            </Link>
-          </p>
+        <div className="auth-foot">
+          <span>Already a member? </span>
+          <Link to="/login" className="auth-link">Sign in here! 🧋</Link>
         </div>
-
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          style={{ textAlign: 'center', marginTop: '20px' }}
-        >
-          <div style={{ fontSize: '2rem' }}>
-            🧋 🎉 🌟 💖 🧋
-          </div>
-        </motion.div>
       </motion.div>
     </div>
   );

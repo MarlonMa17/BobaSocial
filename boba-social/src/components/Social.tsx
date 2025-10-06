@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, MessageCircle, Heart, Share, Plus, UserPlus } from 'lucide-react';
+import { Users, MessageCircle, Heart, Share, UserPlus } from 'lucide-react';
 
 interface User {
   id: number;
@@ -150,41 +150,26 @@ const Social: React.FC<SocialProps> = ({ user }) => {
     ));
   };
 
-  const renderStars = (rating: number) => {
-    return (
-      <div style={{ display: 'flex', gap: '2px' }}>
-        {[1, 2, 3, 4, 5].map(star => (
-          <span
-            key={star}
-            style={{
-              color: star <= rating ? '#FFD700' : '#DDD',
-              fontSize: '1rem'
-            }}
-          >
-            ⭐
-          </span>
-        ))}
-      </div>
-    );
-  };
+  const renderStars = (rating: number) => (
+    <div style={{ display: 'flex', gap: '2px' }}>
+      {[1, 2, 3, 4, 5].map(star => (
+        <span key={star} style={{ color: star <= rating ? '#FFD700' : '#DDD', fontSize: '1rem' }}>⭐</span>
+      ))}
+    </div>
+  );
 
   const FeedTab = () => (
     <div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="card"
-        style={{ marginBottom: '20px' }}
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="card" style={{ marginBottom: '20px' }}>
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setShowNewPost(true)}
           style={{
             width: '100%',
-            background: 'rgba(255, 105, 180, 0.1)',
-            border: '2px dashed #476ce6ff',
-            borderRadius: '15px',
+            background: 'rgba(71,108,230,0.06)',
+            border: '2px dashed rgba(71,108,230,.4)',
+            borderRadius: '16px',
             padding: '20px',
             color: '#476ce6ff',
             fontFamily: 'inherit',
@@ -210,40 +195,20 @@ const Social: React.FC<SocialProps> = ({ user }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
               <div style={{ fontSize: '2.5rem' }}>{post.user.avatar}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 'bold', color: '#0b36c2ff', fontSize: '1.1rem' }}>
-                  {post.user.name}
-                </div>
-                <div style={{ color: '#476ce6ff', fontSize: '0.9rem' }}>
-                  {post.user.level} • {post.timestamp}
-                </div>
+                <div style={{ fontWeight: 'bold', color: '#0b36c2ff', fontSize: '1.1rem' }}>{post.user.name}</div>
+                <div style={{ color: '#476ce6ff', fontSize: '0.9rem' }}>{post.user.level} • {post.timestamp}</div>
               </div>
               {post.user.isOnline && (
-                <div style={{
-                  width: '12px',
-                  height: '12px',
-                  background: '#4CAF50',
-                  borderRadius: '50%',
-                  border: '2px solid white'
-                }} />
+                <div style={{ width: '12px', height: '12px', background: '#4CAF50', borderRadius: '50%', border: '2px solid white' }} />
               )}
             </div>
 
-            <p style={{ color: '#333', marginBottom: '15px', lineHeight: '1.5' }}>
-              {post.content}
-            </p>
+            <p style={{ color: '#333', marginBottom: '15px', lineHeight: '1.5' }}>{post.content}</p>
 
-            <div style={{
-              background: 'rgba(255, 105, 180, 0.1)',
-              borderRadius: '12px',
-              padding: '15px',
-              marginBottom: '15px',
-              border: '2px solid #476ce6ff'
-            }}>
+            <div style={{ background: 'rgba(255, 105, 180, 0.1)', borderRadius: '12px', padding: '15px', marginBottom: '15px', border: '2px solid #476ce6ff' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontWeight: 'bold', color: '#0b36c2ff', marginBottom: '5px' }}>
-                    🧋 {post.drinkOrder}
-                  </div>
+                  <div style={{ fontWeight: 'bold', color: '#0b36c2ff', marginBottom: '5px' }}>🧋 {post.drinkOrder}</div>
                   {renderStars(post.rating)}
                 </div>
               </div>
@@ -289,16 +254,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
                 </motion.button>
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: '#476ce6ff'
-                }}
-              >
+              <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#476ce6ff' }}>
                 <Share size={20} />
               </motion.button>
             </div>
@@ -312,27 +268,12 @@ const Social: React.FC<SocialProps> = ({ user }) => {
     <div>
       <div className="grid grid-2">
         {friends.map((friend, index) => (
-          <motion.div
-            key={friend.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1 }}
-            className="card"
-          >
+          <motion.div key={friend.id} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.1 }} className="card">
             <div style={{ textAlign: 'center', marginBottom: '15px' }}>
               <div style={{ fontSize: '3rem', marginBottom: '10px', position: 'relative' }}>
                 {friend.avatar}
                 {friend.isOnline && (
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '5px',
-                    right: '5px',
-                    width: '12px',
-                    height: '12px',
-                    background: '#4CAF50',
-                    borderRadius: '50%',
-                    border: '2px solid white'
-                  }} />
+                  <div style={{ position: 'absolute', bottom: '5px', right: '5px', width: '12px', height: '12px', background: '#4CAF50', borderRadius: '50%', border: '2px solid white' }} />
                 )}
               </div>
               <h4 style={{ color: '#0b36c2ff', margin: '0 0 5px 0' }}>{friend.name}</h4>
@@ -344,34 +285,17 @@ const Social: React.FC<SocialProps> = ({ user }) => {
             </div>
 
             <div style={{ marginBottom: '15px' }}>
-              <h5 style={{ color: '#0b36c2ff', marginBottom: '8px', fontSize: '0.9rem' }}>
-                Shared Interests:
-              </h5>
+              <h5 style={{ color: '#0b36c2ff', marginBottom: '8px', fontSize: '0.9rem' }}>Shared Interests:</h5>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
                 {friend.sharedInterests.map(interest => (
-                  <span
-                    key={interest}
-                    style={{
-                      background: 'linear-gradient(45deg, #476ce6ff, #FFB6C1)',
-                      color: 'white',
-                      padding: '3px 8px',
-                      borderRadius: '10px',
-                      fontSize: '0.8rem',
-                      fontWeight: 'bold'
-                    }}
-                  >
+                  <span key={interest} style={{ background: 'linear-gradient(45deg, #476ce6ff, #FFB6C1)', color: 'white', padding: '3px 8px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: 'bold' }}>
                     {interest}
                   </span>
                 ))}
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="cute-button"
-              style={{ width: '100%' }}
-            >
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="cute-button" style={{ width: '100%' }}>
               <MessageCircle size={16} style={{ marginRight: '8px' }} />
               Message
             </motion.button>
@@ -386,13 +310,7 @@ const Social: React.FC<SocialProps> = ({ user }) => {
       <h3 className="section-title">🔍 Discover New Friends 🔍</h3>
       <div className="grid grid-2">
         {suggestedFriends.map((person, index) => (
-          <motion.div
-            key={person.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="card"
-          >
+          <motion.div key={person.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} className="card">
             <div style={{ textAlign: 'center', marginBottom: '15px' }}>
               <div style={{ fontSize: '3rem', marginBottom: '10px' }}>{person.avatar}</div>
               <h4 style={{ color: '#0b36c2ff', margin: '0 0 5px 0' }}>{person.name}</h4>
@@ -403,34 +321,17 @@ const Social: React.FC<SocialProps> = ({ user }) => {
             </div>
 
             <div style={{ marginBottom: '15px' }}>
-              <h5 style={{ color: '#0b36c2ff', marginBottom: '8px', fontSize: '0.9rem' }}>
-                Shared Interests:
-              </h5>
+              <h5 style={{ color: '#0b36c2ff', marginBottom: '8px', fontSize: '0.9rem' }}>Shared Interests:</h5>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
                 {person.sharedInterests.map(interest => (
-                  <span
-                    key={interest}
-                    style={{
-                      background: 'linear-gradient(45deg, #476ce6ff, #6e8ae6ff)',
-                      color: 'white',
-                      padding: '3px 8px',
-                      borderRadius: '10px',
-                      fontSize: '0.8rem',
-                      fontWeight: 'bold'
-                    }}
-                  >
+                  <span key={interest} style={{ background: 'linear-gradient(45deg, #476ce6ff, #6e8ae6ff)', color: 'white', padding: '3px 8px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: 'bold' }}>
                     {interest}
                   </span>
                 ))}
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="cute-button"
-              style={{ width: '100%' }}
-            >
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="cute-button" style={{ width: '100%' }}>
               <UserPlus size={16} style={{ marginRight: '8px' }} />
               Add Friend
             </motion.button>
@@ -447,71 +348,51 @@ const Social: React.FC<SocialProps> = ({ user }) => {
   ];
 
   return (
-    <div className="container">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+    <div className="container social-page">
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
         <h1 className="page-title">
           <span className="boba-emoji">👥</span>
           Boba Social Network
           <span className="boba-emoji">👥</span>
         </h1>
 
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '10px',
-          marginBottom: '30px',
-          flexWrap: 'wrap'
-        }}>
-          {tabs.map(tab => (
-            <motion.button
-              key={tab.id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveTab(tab.id as any)}
-              style={{
-                background: activeTab === tab.id
-                  ? 'linear-gradient(45deg, #476ce6ff, #FFB6C1)'
-                  : 'transparent',
-                border: '2px solid #476ce6ff',
-                borderRadius: '25px',
-                padding: '12px 25px',
-                color: activeTab === tab.id ? 'white' : '#476ce6ff',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
-            </motion.button>
-          ))}
+        {/* Tabs — Animated pill */}
+        <div className="tabs-center">
+          <div className="tabs" role="tablist" aria-label="Social tabs">
+            {tabs.map(tab => {
+              const active = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`tab-chip ${active ? 'is-active' : ''}`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="tabPill"
+                      className="tab-pill"
+                      transition={{ type: 'spring', stiffness: 500, damping: 32 }}
+                    />
+                  )}
+                  <span className="tab-emoji">{tab.icon}</span>
+                  <span className="tab-label">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
+
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
+          <motion.div key={activeTab} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
             {tabs.find(tab => tab.id === activeTab)?.component()}
           </motion.div>
         </AnimatePresence>
 
-        <motion.div
-          animate={{ rotate: [0, 5, -5, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          style={{ textAlign: 'center', margin: '30px 0', fontSize: '3rem' }}
-        >
-          🧋 👥 💕
+        <motion.div animate={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 3, repeat: Infinity }} style={{ textAlign: 'center', margin: '30px 0', fontSize: '3rem' }}>
+          {/* 🧋 👥 💕 */}
         </motion.div>
       </motion.div>
     </div>
@@ -519,3 +400,4 @@ const Social: React.FC<SocialProps> = ({ user }) => {
 };
 
 export default Social;
+
