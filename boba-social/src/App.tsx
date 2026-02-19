@@ -9,21 +9,74 @@ import Social from './components/Social';
 import Navigation from './components/Navigation';
 import DailyReward from './components/DailyReward';
 
+const CHECKIN_KEY = 'bobasocial_checkin';
+
+interface CheckinData {
+  lastDate: string;
+  streak: number;
+  checkinDates: string[];
+}
+
+function getToday(): string {
+  return new Date().toISOString().split('T')[0];
+}
+
+function getWeekCheckins(checkinDates: string[]): boolean[] {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - dayOfWeek);
+  weekStart.setHours(0, 0, 0, 0);
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(weekStart);
+    d.setDate(weekStart.getDate() + i);
+    return checkinDates.includes(d.toISOString().split('T')[0]);
+  });
+}
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [showDailyReward, setShowDailyReward] = React.useState(false);
-
-  const handleLogin = (value: boolean) => {
-    setIsAuthenticated(value);
-    if (value) {
-      setShowDailyReward(true);
-    }
-  };
+  const [checkinData, setCheckinData] = React.useState<CheckinData>({ lastDate: '', streak: 0, checkinDates: [] });
+  const [autoCheckedIn, setAutoCheckedIn] = React.useState(false);
 
   const handleEarnPoints = (pts: number) => {
     setCurrentUser((prev: any) => prev ? { ...prev, points: prev.points + pts } : prev);
   };
+
+  const handleLogin = (value: boolean) => {
+    setIsAuthenticated(value);
+    if (value) {
+      const today = getToday();
+      const stored = localStorage.getItem(CHECKIN_KEY);
+      let data: CheckinData = stored
+        ? JSON.parse(stored)
+        : { lastDate: '', streak: 0, checkinDates: [] };
+
+      let didAutoCheckin = false;
+      if (data.lastDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayStr = yesterday.toISOString().split('T')[0];
+        const newStreak = data.lastDate === yesterdayStr ? data.streak + 1 : 1;
+        data = {
+          lastDate: today,
+          streak: newStreak,
+          checkinDates: [...data.checkinDates, today],
+        };
+        localStorage.setItem(CHECKIN_KEY, JSON.stringify(data));
+        didAutoCheckin = true;
+        handleEarnPoints(2);
+      }
+
+      setCheckinData(data);
+      setAutoCheckedIn(didAutoCheckin);
+      setShowDailyReward(true);
+    }
+  };
+
+  const weekCheckins = getWeekCheckins(checkinData.checkinDates);
 
   return (
     <Router>
@@ -31,7 +84,13 @@ function App() {
         {isAuthenticated && <Navigation />}
         <AnimatePresence>
           {showDailyReward && (
-            <DailyReward onClose={() => setShowDailyReward(false)} onEarnPoints={handleEarnPoints} />
+            <DailyReward
+              onClose={() => setShowDailyReward(false)}
+              onEarnPoints={handleEarnPoints}
+              streak={checkinData.streak}
+              weekCheckins={weekCheckins}
+              autoCheckedIn={autoCheckedIn}
+            />
           )}
         </AnimatePresence>
         <motion.div
