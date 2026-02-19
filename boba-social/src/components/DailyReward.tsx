@@ -41,12 +41,9 @@ const DailyReward: React.FC<DailyRewardProps> = ({ onClose, onEarnPoints }) => {
   };
 
   const handleSwitchPlan = (plan: Plan) => {
+    if (todayDone) return;
     setSelectedPlan(plan);
     setChangingPlan(false);
-    // Reset today's progress when switching plan
-    setTodayDone(false);
-    setQuizAnswer(null);
-    setQuizCorrect(null);
   };
 
   return (
@@ -102,14 +99,16 @@ const DailyReward: React.FC<DailyRewardProps> = ({ onClose, onEarnPoints }) => {
           {/* Current plan display */}
           <div className="reward-plan-header">
             <span className="reward-plan-label">Your Plan</span>
-            <motion.button
-              className="reward-change-btn"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setChangingPlan(!changingPlan)}
-            >
-              {changingPlan ? 'Cancel' : 'Change Plan'}
-            </motion.button>
+            {!todayDone && (
+              <motion.button
+                className="reward-change-btn"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setChangingPlan(!changingPlan)}
+              >
+                {changingPlan ? 'Cancel' : 'Change Plan'}
+              </motion.button>
+            )}
           </div>
 
           {/* Plan selection */}
