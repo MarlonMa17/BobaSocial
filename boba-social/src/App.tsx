@@ -1,21 +1,39 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import DrinkProfile from './components/DrinkProfile';
 import Social from './components/Social';
 import Navigation from './components/Navigation';
+import DailyReward from './components/DailyReward';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
+  const [showDailyReward, setShowDailyReward] = React.useState(false);
+
+  const handleLogin = (value: boolean) => {
+    setIsAuthenticated(value);
+    if (value) {
+      setShowDailyReward(true);
+    }
+  };
+
+  const handleEarnPoints = (pts: number) => {
+    setCurrentUser((prev: any) => prev ? { ...prev, points: prev.points + pts } : prev);
+  };
 
   return (
     <Router>
       <div className="App">
         {isAuthenticated && <Navigation />}
+        <AnimatePresence>
+          {showDailyReward && (
+            <DailyReward onClose={() => setShowDailyReward(false)} onEarnPoints={handleEarnPoints} />
+          )}
+        </AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -27,7 +45,7 @@ function App() {
               path="/login"
               element={
                 !isAuthenticated ?
-                <Login setIsAuthenticated={setIsAuthenticated} setCurrentUser={setCurrentUser} /> :
+                <Login setIsAuthenticated={handleLogin} setCurrentUser={setCurrentUser} /> :
                 <Navigate to="/profile" />
               }
             />
@@ -35,7 +53,7 @@ function App() {
               path="/register"
               element={
                 !isAuthenticated ?
-                <Register setIsAuthenticated={setIsAuthenticated} setCurrentUser={setCurrentUser} /> :
+                <Register setIsAuthenticated={handleLogin} setCurrentUser={setCurrentUser} /> :
                 <Navigate to="/profile" />
               }
             />
