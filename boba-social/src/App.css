@@ -987,6 +987,37 @@ body {
   border-radius: 9999px;
 }
 
+/* Plan popularity bar */
+.plan-popularity{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.plan-popularity-bar{
+  flex: 1;
+  height: 5px;
+  background: rgba(0,0,0,.08);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.plan-popularity-fill{
+  height: 100%;
+  border-radius: 9999px;
+}
+.plan-popularity-fill--checkin{
+  background: linear-gradient(90deg, #5a7cff, #7c9dff);
+}
+.plan-popularity-fill--quiz{
+  background: linear-gradient(90deg, #b68aff, #d4aaff);
+}
+.plan-popularity-label{
+  font-size: .72rem;
+  color: #8a96b3;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
 /* Quiz */
 .reward-quiz{
   overflow: hidden;

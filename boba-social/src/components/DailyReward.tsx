@@ -3,6 +3,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 type Plan = 'checkin' | 'quiz';
 
+const PLAN_STATS_KEY = 'bobasocial_plan_stats';
+
+// Base mock community counts (simulates other users)
+const BASE_COUNTS = { checkin: 620, quiz: 380 };
+
+function loadStats(): { checkin: number; quiz: number } {
+  const stored = localStorage.getItem(PLAN_STATS_KEY);
+  return stored ? JSON.parse(stored) : BASE_COUNTS;
+}
+
+function savePlanChoice(plan: Plan) {
+  const stats = loadStats();
+  stats[plan] += 1;
+  localStorage.setItem(PLAN_STATS_KEY, JSON.stringify(stats));
+}
+
+function getPct(stats: { checkin: number; quiz: number }) {
+  const total = stats.checkin + stats.quiz;
+  return {
+    checkin: Math.round((stats.checkin / total) * 100),
+    quiz: Math.round((stats.quiz / total) * 100),
+  };
+}
+
 interface DailyRewardProps {
   onClose: () => void;
   onEarnPoints: (pts: number) => void;
@@ -22,6 +46,7 @@ const DailyReward: React.FC<DailyRewardProps> = ({
 }) => {
   const [selectedPlan, setSelectedPlan] = useState<Plan>('checkin');
   const [changingPlan, setChangingPlan] = useState(false);
+  const [planStats, setPlanStats] = useState(loadStats);
 
   // Quiz state
   const [quizAnswer, setQuizAnswer] = useState<number | null>(null);
@@ -49,6 +74,10 @@ const DailyReward: React.FC<DailyRewardProps> = ({
 
   const handleSwitchPlan = (plan: Plan) => {
     if (quizDone) return;
+    if (plan !== selectedPlan) {
+      savePlanChoice(plan);
+      setPlanStats(loadStats());
+    }
     setSelectedPlan(plan);
     setChangingPlan(false);
   };
@@ -182,41 +211,70 @@ const DailyReward: React.FC<DailyRewardProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                <motion.div
-                  className={`reward-option reward-option--selectable ${selectedPlan === 'checkin' ? 'reward-option--active' : ''}`}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => handleSwitchPlan('checkin')}
-                >
-                  <div className="reward-option-left">
-                    <span className="reward-option-icon">📅</span>
-                    <div>
-                      <h3 className="reward-option-title">Daily Check-in</h3>
-                      <p className="reward-option-desc">Auto +2 pts when you open the app</p>
-                    </div>
-                  </div>
-                  <div className="reward-option-right">
-                    <span className="reward-pts-badge">+2 pts/day</span>
-                    {selectedPlan === 'checkin' && <span className="reward-current-tag">Current</span>}
-                  </div>
-                </motion.div>
+                {(() => {
+                  const pct = getPct(planStats);
+                  return (
+                    <>
+                      <motion.div
+                        className={`reward-option reward-option--selectable ${selectedPlan === 'checkin' ? 'reward-option--active' : ''}`}
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => handleSwitchPlan('checkin')}
+                      >
+                        <div className="reward-option-left" style={{ flex: 1 }}>
+                          <span className="reward-option-icon">📅</span>
+                          <div style={{ flex: 1 }}>
+                            <h3 className="reward-option-title">Daily Check-in</h3>
+                            <p className="reward-option-desc">Auto +2 pts when you open the app</p>
+                            <div className="plan-popularity">
+                              <div className="plan-popularity-bar">
+                                <motion.div
+                                  className="plan-popularity-fill plan-popularity-fill--checkin"
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${pct.checkin}%` }}
+                                  transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+                                />
+                              </div>
+                              <span className="plan-popularity-label">{pct.checkin}% of users</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="reward-option-right">
+                          <span className="reward-pts-badge">+2 pts/day</span>
+                          {selectedPlan === 'checkin' && <span className="reward-current-tag">Current</span>}
+                        </div>
+                      </motion.div>
 
-                <motion.div
-                  className={`reward-option reward-option--selectable ${selectedPlan === 'quiz' ? 'reward-option--active' : ''}`}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => handleSwitchPlan('quiz')}
-                >
-                  <div className="reward-option-left">
-                    <span className="reward-option-icon">🧠</span>
-                    <div>
-                      <h3 className="reward-option-title">Daily Quiz</h3>
-                      <p className="reward-option-desc">Answer one quiz per day for more points</p>
-                    </div>
-                  </div>
-                  <div className="reward-option-right">
-                    <span className="reward-pts-badge">+5 pts/day</span>
-                    {selectedPlan === 'quiz' && <span className="reward-current-tag">Current</span>}
-                  </div>
-                </motion.div>
+                      <motion.div
+                        className={`reward-option reward-option--selectable ${selectedPlan === 'quiz' ? 'reward-option--active' : ''}`}
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => handleSwitchPlan('quiz')}
+                      >
+                        <div className="reward-option-left" style={{ flex: 1 }}>
+                          <span className="reward-option-icon">🧠</span>
+                          <div style={{ flex: 1 }}>
+                            <h3 className="reward-option-title">Daily Quiz</h3>
+                            <p className="reward-option-desc">Answer one quiz per day for more points</p>
+                            <div className="plan-popularity">
+                              <div className="plan-popularity-bar">
+                                <motion.div
+                                  className="plan-popularity-fill plan-popularity-fill--quiz"
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${pct.quiz}%` }}
+                                  transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+                                />
+                              </div>
+                              <span className="plan-popularity-label">{pct.quiz}% of users</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="reward-option-right">
+                          <span className="reward-pts-badge">+5 pts/day</span>
+                          {selectedPlan === 'quiz' && <span className="reward-current-tag">Current</span>}
+                        </div>
+                      </motion.div>
+                    </>
+                  );
+                })()}
               </motion.div>
             ) : (
               <motion.div
